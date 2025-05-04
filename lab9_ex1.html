@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Melbourne Tree Type Bar Chart</title>
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+
+<script charset="utf-8" src="https://d3js.org/d3.v4.min.js"></script>
+<script charset="utf-8" src="https://cdnjs.cloudflare.com/ajax/libs/dimple/2.3.0/dimple.latest.min.js"></script>
+    
+<style>
+        
+    #chartContainer {width: 840px; margin: auto; margin-top: 50px; }
+    #chartContainer p {margin-left: 60px; margin-bottom: 5px; margin-top: 0; padding: 0;}
+    #charttitle {font: bold 22px  Garamond, serif;}
+        
+</style>
+</head>
+
+<body>
+
+<div id="chartContainer">
+    <p id="charttitle">Melbourne Trees</p>
+    <p id="chartsubhead">Counts of Tree Types in Melbourne, Australia</p>
+</div>
+
+
+
+<script>
+
+      d3.csv("https://raw.githubusercontent.com/alongwel/lab9/refs/heads/main/Melbourne_Top10_Trees.csv", function(TreeData) {
+            
+            console.log(TreeData[1]);
+          
+            var svg = dimple.newSvg("#chartContainer", 840, 440);
+
+            var myChart = new dimple.chart(svg, TreeData);
+            myChart.setBounds(60, 15, 700, 300); 
+
+            myChart.defaultColors = [
+                new dimple.color("#228B22")
+            ];
+
+            var x = myChart.addCategoryAxis("x", "Common Name");
+
+            var y = myChart.addMeasureAxis("y", "Count");
+            y.title = "Amount of Each Tree";
+
+            var s = myChart.addSeries(null, dimple.plot.bar);
+
+            myChart.draw(500); 
+          
+            svg.selectAll("path.domain").style("stroke", "#CCC");
+          
+            svg.selectAll("g.tick line").style("stroke", "#CCC");
+
+      });
+
+
+</script>
+
+</body>
+</html>
